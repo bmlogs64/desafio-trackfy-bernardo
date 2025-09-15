@@ -10,7 +10,7 @@ export async function criarNovaPessoa(req: Request, res: Response) {
     const pessoa = await criarPessoa(nome, funcao, Number(areaID));
     res.status(201).json(pessoa);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 }
 
