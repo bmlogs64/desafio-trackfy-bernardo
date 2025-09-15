@@ -1,0 +1,16 @@
+-- CreateTable
+CREATE TABLE "Pessoa" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nome" TEXT NOT NULL,
+    "funcao" TEXT NOT NULL,
+    "areaID" INTEGER NOT NULL,
+    CONSTRAINT "Pessoa_areaID_fkey" FOREIGN KEY ("areaID") REFERENCES "Area" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Area" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nome" TEXT NOT NULL,
+    "tipo" TEXT NOT NULL,
+    "localizacao" TEXT NOT NULL
+);
