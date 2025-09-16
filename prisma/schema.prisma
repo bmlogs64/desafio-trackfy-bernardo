@@ -1,32 +1,38 @@
 generator client {
-
   provider = "prisma-client-js"
-
 }
 
 datasource db {
-
   provider = "sqlite"
   url      = env("DATABASE_URL")
-
 }
 
 model Pessoa {
-
-  id  Int @id @default(autoincrement())
-  nome  String
-  funcao  String
+  id     Int    @id @default(autoincrement())
+  nome   String
+  funcao String
   areaID Int
-  area Area @relation(fields: [areaID], references: [id])
+  area   Area   @relation(fields: [areaID], references: [id])
 
+  presencas Presenca[]
 }
 
 model Area {
-
-  id  Int @id @default(autoincrement())
-  nome  String
-  tipo  String
+  id          Int      @id @default(autoincrement())
+  nome        String
+  tipo        String
   localizacao String
-  pessoas Pessoa[]
+  pessoas     Pessoa[]
 
+  presencas Presenca[]
+}
+
+model Presenca {
+  id       Int      @id @default(autoincrement())
+  pessoaID Int
+  areaID   Int
+  dataHora DateTime @default(now())
+
+  pessoa Pessoa @relation(fields: [pessoaID], references: [id])
+  area   Area   @relation(fields: [areaID], references: [id])
 }
