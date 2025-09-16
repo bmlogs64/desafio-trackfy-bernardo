@@ -36,3 +36,10 @@ model Presenca {
   pessoa Pessoa @relation(fields: [pessoaID], references: [id])
   area   Area   @relation(fields: [areaID], references: [id])
 }
+
+model Usuario {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  nome  String
+  senha String?
+}
