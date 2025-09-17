@@ -7,6 +7,7 @@ link do docs para visualização do processo: https://docs.google.com/document/d
 Passo 1 - Clonar o repositorio
 
 git clone https://github.com/bmlogs64/desafio-trackfy-bernardo.git
+
 cd desafio-trackfy
 
 2 - Instalar as dependências
