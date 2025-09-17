@@ -18,7 +18,7 @@ app.use("/pessoas", pessoaRoutes);
 app.use("/presencas", presencaRoutes);
 
 const PORT = 3000;
-const URL = `http://localhost:${PORT}`;
+const URL = `http://localhost:${PORT}/auth/google`;
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando em ${URL}`);
