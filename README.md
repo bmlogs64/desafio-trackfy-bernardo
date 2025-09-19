@@ -51,6 +51,14 @@ Authorization: Bearer <TOKEN_AQUI>.
 
 Todos os endpoints exigem envio do JWT no header.
 
+### 👉 Para explorar a documentação interativa da API, acesse o Swagger UI:
+
+```bash
+http://localhost:3000/api-docs
+```
+
+No Swagger você pode visualizar todos os endpoints, parâmetros (query, params e body), schemas de entrada e saída, além de testar requisições diretamente pela interface.
+
 ### 👤 Pessoas
 
 POST /pessoas → Cria uma nova pessoa.
