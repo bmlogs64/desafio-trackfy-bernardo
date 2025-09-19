@@ -11,8 +11,6 @@ import { loginGoogle, googleCallback } from "../controllers/authController";
  *     responses:
  *       302:
  *         description: Redireciona para a página de autenticação do Google
- *       401:
- *         description: Token não fornecido
  *       500:
  *         description: Erro interno no processo de autenticação
  *
