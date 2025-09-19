@@ -4,6 +4,8 @@ Este projeto é uma aplicação backend em **TypeScript com Express**, usando **
 
 📄 Documentação do processo: [Google Docs](https://docs.google.com/document/d/1o5HKVQLIiWiGEUAclRSvuTU7_AyJkH99hI1FT6QKUXw/edit?usp=sharing)
 
+📄 Documentação das funções: [Google Docs](https://docs.google.com/document/d/1V-a1L9vIZDCN6SUQejfwojVC0m06PIaaz7sa9wsuY6o/edit?usp=sharing)
+
 ## 🚀 Como rodar o projeto
 
 ### 1️⃣ Clonar o repositório
