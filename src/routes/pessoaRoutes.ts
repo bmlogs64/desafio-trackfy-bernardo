@@ -41,6 +41,8 @@ import { autenticar } from "../middleware/authMiddleware"
  *     responses:
  *       200:
  *         description: Lista de pessoas retornada com sucesso
+ *       401:
+ *         description: Token não fornecido
  *       500:
  *         description: Erro interno do servidor
  *
