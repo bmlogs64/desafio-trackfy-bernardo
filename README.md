@@ -10,7 +10,7 @@ Este projeto é uma aplicação backend em **TypeScript com Express**, usando **
 
 Antes de rodar o projeto, você precisa ter instalado na sua máquina:
 
-Node.js (versão 18 ou superior recomendada)
+Node.js (versão 18.18 ou superior recomendada)
 npm (geralmente instalado junto com o Node.js) ou yarn
 Git (para clonar o repositório)
 
