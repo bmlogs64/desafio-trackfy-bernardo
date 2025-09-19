@@ -13,116 +13,152 @@ git clone https://github.com/bmlogs64/desafio-trackfy-bernardo.git
 cd desafio-trackfy
 ```
 
-2 - Instalar as dependências
+### 2️⃣ Instalar dependências
 
-Instalando dependências do Node
-
+```bash
 npm install
+```
 
-Rodar o prisma
+Rodar as migrations do Prisma:
 
+```bash
 npx prisma migrate dev --name init
+```
 
-3 - Rodar a aplicação em modo de desenvolvimento
+### 3️⃣ Rodar em modo de desenvolvimento
 
+```bash
 npm run dev
+```
 
-4 - Autenticar
+### 4️⃣ Autenticação
 
-Para pegar o token primeiro pecisar autenticar via google
+Para obter o token JWT é necessário autenticar via Google:
 
-Acessando a url: http://localhost:3000/auth/google
+Acesse:
 
-Após o login com a conta google, ira aparecer o seu token, coloque o token no header Authorization: Bearer <TOKEN_AQUI>.
+```bash
+http://localhost:3000/auth/google
+```
 
-Endpoints
+Após o login, será retornado o token JWT, que deve ser enviado no header em todos os requests protegidos:
 
-É necessário enviar o token JWT no header Authorization: Bearer <token> em todos
+```makefile
+Authorization: Bearer <TOKEN_AQUI>.
+```
 
-POST /pessoas
+## 📊 Endpoints
 
-Cria uma nova pessoa. Necessário passar no body:
+Todos os endpoints exigem envio do JWT no header.
 
+### 👤 Pessoas
+
+POST /pessoas → Cria uma nova pessoa.
+
+Body:
+
+```json
 {
   "nome": "João Silva",
   "funcao": "Engenheiro",
   "areaID": 1
 }
+```
 
-areaID deve corresponder a uma área existente e retorna o objeto da pessoa criada.
+GET /pessoas → Lista todas as pessoas.
+GET /pessoas/:id → Busca pessoa específica pelo ID (via params).
 
-POST /areas
+### 🏢 Áreas
 
-Cria uma nova área. É necessário passar os dados no body como JSON:
+POST /areas → Cria uma nova área.
+Body:
 
+```json
 {
   "nome": "Manufatura",
   "tipo": "Produção",
   "localizacao": "Prédio A"
 }
+```
+
+GET /areas → Lista todas as áreas.
+GET /areas/:id → Busca uma área específica pelo ID (via params).
 
 Retorna o objeto da área criada.
 
-POST /presencas
+### 🕒 Presenças
 
-Registra a presença de uma pessoa em uma área.
+POST /presencas → Registra presença.
+Body:
 
+```json
 {
   "pessoaID": 2,
   "areaID": 1
 }
+```
 
-Retorna o registro de presença criado, incluindo os dados da pessoa e da área.
+GET /presencas → Lista todas as presenças ou filtra por query params:
 
-GET /pessoas
-
-Lista todas as pessoas e retorna um array de objetos com as pessoas.
-
-GET /pessoas/:id
-
-Busca uma pessoa específica pelo id, o id vai no params da URL e retorna o objeto da pessoa.
-
-GET /areas
-
-Lista todas as áreas existentes e retorna um array de objetos com as áreas.
-
-GET /areas/:id
-
-Busca uma área específica pelo id, o id vai no params da URL e retorna o objeto da área.
-
-GET /presencas
-
-Este endpoint lista todas as presenças ou filtra com base nos query params enviados na URL. É possível passar pessoaID para filtrar pelo ID da pessoa, areaID para filtrar pelo ID da área, e inicio e fim para filtrar por período. Os parâmetros de período aceitam datas completas no formato ISO 8601 (YYYY-MM-DD ou YYYY-MM-DDTHH:mm:ss); se for fornecido apenas o dia (YYYY-MM-DD), o filtro considera o início do dia (00:00:00) como horário inicial, então presenças ocorridas mais tarde podem não ser incluídas corretamente. O retorno é um array com todas as presenças correspondentes, incluindo os dados completos de pessoa e área.
-Exemplo de query params:
-
+```makefile
 ?pessoaID=2&areaID=1&inicio=2025-09-14T00:00:00&fim=2025-09-16T23:59:59
+```
+
+pessoaID → filtra pelo ID da pessoa
+
+areaID → filtra pelo ID da área
+
+inicio e fim → período (datas ISO 8601).
+
+⚠️ Se passar apenas YYYY-MM-DD, o filtro considera 00:00:00 do dia, podendo excluir presenças registradas mais tarde.
+
+Retorno:
+
+```json
+[
+  {
+    "id": 1,
+    "pessoa": { "id": 2, "nome": "João Silva" },
+    "area": { "id": 1, "nome": "Manufatura" },
+    "dataHora": "2025-09-14T14:30:00Z"
+  }
+]
+```
+
+### 📈 Relatórios
 
 GET /presencas/relatorio/periodo
+Retorna a contagem de presenças em um período:
+Query params opcionais → inicio, fim (ISO 8601).
+Exemplo:
 
-Este endpoint retorna a contagem de presenças agrupadas por período. Também é possível filtrar por inicio e fim usando query params no formato completo ISO 8601, para que o relatório considere corretamente os horários das presenças. O retorno mostra o período filtrado e a quantidade de presenças dentro dele. Se os parâmetros não forem informados, o relatório considera todas as presenças registradas.
+```json
+[
+  { "inicio": "2025-09-14T00:00:00", "fim": "2025-09-16T23:59:59", "quantidade": 5 }
+]
+```
 
 GET /presencas/relatorio/area
-
-Retorna a contagem de presenças agrupadas por área. Pode filtrar por query param areaID.
+Retorna presenças agrupadas por área.
+Query param opcional → areaID.
 
 GET /presencas/relatorio/area/:areaID
+Mesma função, mas filtrando pelo param areaID.
 
-Mesma função do anterior, mas filtra diretamente pelo areaID passado no params da URL.
-
-Decisões técnicas adotadas
+## ⚙️ Decisões Técnicas
 
 O projeto foi desenvolvido em TypeScript com Express para fornecer uma API REST fortemente tipada. Para persistência de dados, usei Prisma ORM com SQLite, facilitando a modelagem de relações entre Áreas, Pessoas e Presenças, além de permitir consultas com filtros dinâmicos e agregações.
 
-A aplicação foi organizada de forma modular, separando controllers, services, routes e middleware em pastas distintas. Essa abordagem permite que cada responsabilidade fique bem delimitada: controllers cuidam da lógica de entrada e saída HTTP, services encapsulam a lógica de negócio e acesso ao banco de dados via Prisma, routes definem os endpoints da API e middleware gerencia autenticação e outros filtros. Essa estrutura modular facilita a manutenção, a escalabilidade do projeto e a adição de novas funcionalidades sem impactar o restante do sistema.
+A aplicação foi organizada de forma modular, separando controllers, services, routes e middleware em pastas distintas. Essa estrutura garante responsabilidades bem definidas: controllers cuidam da lógica HTTP, services encapsulam regras de negócio, routes definem endpoints e middleware gerencia autenticação. Essa separação facilita manutenção, escalabilidade e adição de novas features.
 
-A autenticação foi feita via Google OAuth 2.0, usando Passport com a estratégia passport-google-oauth20, permitindo login sem senha. O retorno do Google é utilizado para criar ou localizar usuários no banco de dados e gerar tokens JWT para autenticar endpoints protegidos.
+A autenticação foi implementada via Google OAuth 2.0 com passport-google-oauth20. O login do Google cria ou busca usuários no banco e gera tokens JWT para proteger os endpoints.
 
-Para proteger rotas sensíveis, implementei um middleware autenticar que valida o token JWT no header Authorization. Isso garante que apenas usuários autenticados possam criar, alterar ou consultar dados críticos.
+As rotas sensíveis são protegidas por um middleware autenticar que valida o token JWT no header, garantindo que apenas usuários autenticados possam acessar recursos críticos.
 
-Sugestões de melhoria
+## 💡 Sugestões de Melhoria
 
-Adicionar roles de usuário (administrador, visitante, funcionário) para controle de permissões mais granular.
+Adicionar roles de usuário (admin, funcionário, visitante).
 
-Incluir logs de auditoria para monitorar ações do usuário e aumentar a segurança.
+Implementar logs de auditoria para maior segurança.
 
-Migrar de SQLite para PostgreSQL ou MySQL em produção para escalabilidade e concorrência.
+Migrar de SQLite para PostgreSQL ou MySQL em produção para escalabilidade.
