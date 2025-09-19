@@ -1,4 +1,5 @@
 import express from "express";
+import { setupSwagger } from "./config/swagger";
 import passport from "passport";
 import "./config/passport";
 import dotenv from "dotenv";
@@ -17,9 +18,12 @@ app.use("/areas", areaRoutes);
 app.use("/pessoas", pessoaRoutes);
 app.use("/presencas", presencaRoutes);
 
+setupSwagger(app);
+
 const PORT = 3000;
 const URL = `http://localhost:${PORT}/auth/google`;
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em ${URL}`);
+  console.log(`Autenticação no servidor rodando em ${URL}`);
+  console.log("Swagger disponível em http://localhost:3000/api-docs");
 });
