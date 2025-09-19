@@ -1,14 +1,17 @@
-Desafio Trackfy
+# 📌 Desafio Trackfy
 
-Este projeto é uma aplicação backend em TypeScript com Express, usando Prisma e SQLite para gerenciar Áreas, Pessoas e Presenças, com autenticação via Google OAuth 2.0 e proteção de endpoints usando JWT.
+Este projeto é uma aplicação backend em **TypeScript com Express**, usando **Prisma** e **SQLite** para gerenciar **Áreas, Pessoas e Presenças**, com autenticação via **Google OAuth 2.0** e proteção de endpoints via **JWT**.
 
-link do docs para visualização do processo: https://docs.google.com/document/d/1o5HKVQLIiWiGEUAclRSvuTU7_AyJkH99hI1FT6QKUXw/edit?usp=sharing
+📄 Documentação do processo: [Google Docs](https://docs.google.com/document/d/1o5HKVQLIiWiGEUAclRSvuTU7_AyJkH99hI1FT6QKUXw/edit?usp=sharing)
 
-Passo 1 - Clonar o repositorio
+## 🚀 Como rodar o projeto
 
+### 1️⃣ Clonar o repositório
+
+```bash
 git clone https://github.com/bmlogs64/desafio-trackfy-bernardo.git
-
 cd desafio-trackfy
+```
 
 2 - Instalar as dependências
 
