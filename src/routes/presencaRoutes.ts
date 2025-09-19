@@ -93,15 +93,9 @@ import { autenticar } from "../middleware/authMiddleware"
  * /presencas/relatorio/area:
  *   get:
  *     summary: Relatório de presenças por área
- *     description: Retorna a quantidade de presenças agrupadas por área. Pode ser filtrado por query param areaID.
+ *     description: Retorna a quantidade de presenças agrupadas por área.
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: areaID
- *         schema:
- *           type: integer
- *         description: ID da área para filtrar
  *     responses:
  *       200:
  *         description: Relatório de presenças por área
