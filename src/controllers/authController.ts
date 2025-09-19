@@ -7,10 +7,12 @@ export function loginGoogle(req: Request, res: Response, next: Function) {
 
 export function googleCallback(req: Request, res: Response, next: Function) {
   passport.authenticate("google", (err, user) => {
-    if (err || !user) {
-      return res.status(401).json({ error: "Erro ao autenticar com Google" });
+    if (err) {
+      return res.status(500).json({ error: "Erro no servidor durante autenticação" });
     }
-
-    res.json({ token: user.token });
+    if (!user) {
+      return res.status(401).json({ error: "Usuário não autenticado com Google" });
+    }
+    return res.json({ token: user.token });
   })(req, res, next);
 }

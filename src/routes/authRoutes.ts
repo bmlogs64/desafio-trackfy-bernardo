@@ -3,33 +3,32 @@ import passport from "passport";
 import { loginGoogle, googleCallback } from "../controllers/authController";
 
 /**
- * @openapi
+ * @swagger
  * /auth/google:
  *   get:
- *     summary: Inicia autenticação com Google OAuth 2.0
- *     description: Redireciona o usuário para o login do Google. Após o login, será redirecionado para o callback configurado.
+ *     summary: Login com Google
+ *     tags: [Autenticação]
  *     responses:
  *       302:
- *         description: Redireciona para o Google
- */
-
-/**
- * @openapi
+ *         description: Redireciona para a página de autenticação do Google
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro interno no processo de autenticação
+ *
  * /auth/google/callback:
  *   get:
- *     summary: Callback de autenticação Google
- *     description: Endpoint chamado pelo Google após o login. Retorna um token JWT.
+ *     summary: Callback de autenticação do Google
+ *     tags: [Autenticação]
  *     responses:
  *       200:
- *         description: Token JWT retornado
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 token:
- *                   type: string
+ *         description: Autenticado com sucesso, retorna token
+ *       401:
+ *         description: Erro ao autenticar com Google
+ *       500:
+ *         description: Erro interno do servidor
  */
+
 
 
 const router = Router();

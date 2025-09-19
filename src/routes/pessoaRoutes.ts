@@ -3,28 +3,21 @@ import { criarNovaPessoa, pegarTodasPessoas, pegarPessoaID } from "../controller
 import { autenticar } from "../middleware/authMiddleware"
 
 /**
- * @openapi
+ * @swagger
  * /pessoas:
- *   get:
- *     summary: Lista todas as pessoas
- *     description: Retorna um array com todas as pessoas cadastradas.
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Lista de pessoas
- *
  *   post:
- *     summary: Cria uma nova pessoa
- *     description: Registra uma pessoa vinculada a uma área existente.
- *     security:
- *       - bearerAuth: []
+ *     summary: Criar uma nova pessoa
+ *     tags: [Pessoas]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - nome
+ *               - funcao
+ *               - areaID
  *             properties:
  *               nome:
  *                 type: string
@@ -32,34 +25,46 @@ import { autenticar } from "../middleware/authMiddleware"
  *                 type: string
  *               areaID:
  *                 type: integer
- *             required:
- *               - nome
- *               - funcao
- *               - areaID
  *     responses:
  *       201:
  *         description: Pessoa criada com sucesso
- */
-
-/**
- * @openapi
+ *       400:
+ *         description: Todos os campos são obrigatórios
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro interno do servidor
+ *
+ *   get:
+ *     summary: Listar todas as pessoas
+ *     tags: [Pessoas]
+ *     responses:
+ *       200:
+ *         description: Lista de pessoas retornada com sucesso
+ *       500:
+ *         description: Erro interno do servidor
+ *
  * /pessoas/{id}:
  *   get:
- *     summary: Busca uma pessoa pelo ID
- *     description: Retorna os dados de uma pessoa específica.
- *     security:
- *       - bearerAuth: []
+ *     summary: Buscar pessoa por ID
+ *     tags: [Pessoas]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID da pessoa
  *     responses:
  *       200:
- *         description: Dados da pessoa
+ *         description: Pessoa encontrada
+ *       401:
+ *         description: Token não fornecido
+ *       404:
+ *         description: Pessoa não encontrada
+ *       500:
+ *         description: Erro interno do servidor
  */
+
 
 
 const router = Router();

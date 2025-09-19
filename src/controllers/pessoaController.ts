@@ -15,13 +15,24 @@ export async function criarNovaPessoa(req: Request, res: Response) {
 }
 
 export async function pegarTodasPessoas(req: Request, res: Response) {
-  const pessoas = await listarPessoas();
-  res.json(pessoas);
+  try {
+    const pessoas = await listarPessoas();
+    return res.json(pessoas);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message || "Erro interno ao listar pessoas" });
+  }
 }
 
 export async function pegarPessoaID(req: Request, res: Response) {
-  const { id } = req.params;
-  const pessoa = await buscarPessoaPorID(Number(id));
-  if (!pessoa) return res.status(404).json({ error: "Pessoa não encontrada" });
-  res.json(pessoa);
+  try {
+    const { id } = req.params;
+    if (isNaN(Number(id))) {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+    const pessoa = await buscarPessoaPorID(Number(id));
+    if (!pessoa) return res.status(404).json({ error: "Pessoa não encontrada" });
+    return res.json(pessoa);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message || "Erro interno ao buscar pessoa" });
+  }
 }

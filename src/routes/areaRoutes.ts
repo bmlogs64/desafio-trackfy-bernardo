@@ -3,28 +3,21 @@ import { criarNovaArea, pegarTodasAreas, pegarAreaID } from "../controllers/area
 import { autenticar } from "../middleware/authMiddleware"
 
 /**
- * @openapi
+ * @swagger
  * /areas:
- *   get:
- *     summary: Lista todas as áreas
- *     description: Retorna um array com todas as áreas cadastradas.
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Lista de áreas
- *
  *   post:
- *     summary: Cria uma nova área
- *     description: Registra uma área no sistema.
- *     security:
- *       - bearerAuth: []
+ *     summary: Criar uma nova área
+ *     tags: [Áreas]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - nome
+ *               - tipo
+ *               - localizacao
  *             properties:
  *               nome:
  *                 type: string
@@ -32,33 +25,46 @@ import { autenticar } from "../middleware/authMiddleware"
  *                 type: string
  *               localizacao:
  *                 type: string
- *             required:
- *               - nome
- *               - tipo
- *               - localizacao
  *     responses:
  *       201:
  *         description: Área criada com sucesso
- */
-
-/**
- * @openapi
+ *       400:
+ *         description: Todos os campos são obrigatórios
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro interno do servidor
+ *
+ *   get:
+ *     summary: Listar todas as áreas
+ *     tags: [Áreas]
+ *     responses:
+ *       200:
+ *         description: Lista de áreas retornada com sucesso
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro interno do servidor
+ *
  * /areas/{id}:
  *   get:
- *     summary: Busca uma área pelo ID
- *     description: Retorna os dados de uma área específica.
- *     security:
- *       - bearerAuth: []
+ *     summary: Buscar uma área por ID
+ *     tags: [Áreas]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID da área
  *     responses:
  *       200:
- *         description: Dados da área
+ *         description: Área encontrada
+ *       401:
+ *         description: Token não fornecido
+ *       404:
+ *         description: Área não encontrada
+ *       500:
+ *         description: Erro interno do servidor
  */
 
 

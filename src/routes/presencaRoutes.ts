@@ -4,43 +4,11 @@ import { contarPresencasPorPeriodo, contarPresencasPorArea } from "../controller
 import { autenticar } from "../middleware/authMiddleware"
 
 /**
- * @openapi
+ * @swagger
  * /presencas:
- *   get:
- *     summary: Lista todas as presenças
- *     description: Retorna todas as presenças registradas. Pode ser filtrado por pessoa, área e período.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: pessoaID
- *         schema:
- *           type: integer
- *         description: ID da pessoa para filtrar
- *       - in: query
- *         name: areaID
- *         schema:
- *           type: integer
- *         description: ID da área para filtrar
- *       - in: query
- *         name: inicio
- *         schema:
- *           type: string
- *           format: date-time
- *         description: Data/hora de início do filtro (ISO 8601)
- *       - in: query
- *         name: fim
- *         schema:
- *           type: string
- *           format: date-time
- *         description: Data/hora de fim do filtro (ISO 8601)
- *     responses:
- *       200:
- *         description: Lista de presenças
- *
  *   post:
- *     summary: Registra uma presença
- *     description: Cria um novo registro de presença vinculando pessoa e área.
+ *     summary: Registrar uma nova presença
+ *     tags: [Presenças]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -49,64 +17,103 @@ import { autenticar } from "../middleware/authMiddleware"
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - pessoaID
+ *               - areaID
  *             properties:
  *               pessoaID:
  *                 type: integer
  *               areaID:
  *                 type: integer
- *             required:
- *               - pessoaID
- *               - areaID
  *     responses:
  *       201:
- *         description: Presença criada com sucesso
- */
-
-/**
- * @openapi
- * /presencas/relatorio/periodo:
+ *         description: Presença registrada com sucesso
+ *       400:
+ *         description: Pessoa e área são obrigatórios
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro interno do servidor
+ *
  *   get:
- *     summary: Relatório de presenças por período
- *     description: Retorna a quantidade de presenças agrupadas dentro de um intervalo de tempo.
+ *     summary: Listar presenças (com filtros opcionais)
+ *     tags: [Presenças]
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - in: query
+ *         name: pessoaID
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: areaID
+ *         schema:
+ *           type: integer
  *       - in: query
  *         name: inicio
  *         schema:
  *           type: string
  *           format: date-time
- *         description: Data/hora de início (ISO 8601)
  *       - in: query
  *         name: fim
  *         schema:
  *           type: string
  *           format: date-time
- *         description: Data/hora de fim (ISO 8601)
  *     responses:
  *       200:
- *         description: Relatório de presenças por período
- */
-
-/**
- * @openapi
+ *         description: Lista de presenças retornada com sucesso
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro interno do servidor
+ *
+ * /presencas/relatorio/periodo:
+ *   get:
+ *     summary: Relatório de presenças por período
+ *     tags: [Relatórios]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: inicio
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date-time
+ *       - in: query
+ *         name: fim
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date-time
+ *     responses:
+ *       200:
+ *         description: Contagem de presenças retornada com sucesso
+ *       400:
+ *         description: É necessário informar 'inicio' e 'fim'
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro ao contar presenças por período
+ *
  * /presencas/relatorio/area:
  *   get:
- *     summary: Relatório de presenças por área
- *     description: Retorna a quantidade de presenças agrupadas por área.
+ *     summary: Relatório de presenças por todas as áreas
+ *     tags: [Relatórios]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Relatório de presenças por área
- */
-
-/**
- * @openapi
+ *         description: Contagem de presenças por área retornada com sucesso
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro ao contar presenças por área
+ *
  * /presencas/relatorio/area/{areaID}:
  *   get:
  *     summary: Relatório de presenças de uma área específica
- *     description: Retorna a quantidade de presenças apenas da área informada pelo parâmetro.
+ *     tags: [Relatórios]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -115,12 +122,14 @@ import { autenticar } from "../middleware/authMiddleware"
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID da área
  *     responses:
  *       200:
- *         description: Relatório de presenças para a área informada
+ *         description: Contagem de presenças da área retornada com sucesso
+ *       401:
+ *         description: Token não fornecido
+ *       500:
+ *         description: Erro ao contar presenças da área
  */
-
 
 const router = Router();
 
