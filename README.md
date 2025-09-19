@@ -27,7 +27,6 @@ npm -v
 
 ```bash
 git clone https://github.com/bmlogs64/desafio-trackfy-bernardo.git
-cd desafio-trackfy
 ```
 
 ### 2️⃣ Instalar dependências
