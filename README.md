@@ -6,6 +6,21 @@ Este projeto é uma aplicação backend em **TypeScript com Express**, usando **
 
 📄 Documentação das funções: [Google Docs](https://docs.google.com/document/d/1V-a1L9vIZDCN6SUQejfwojVC0m06PIaaz7sa9wsuY6o/edit?usp=sharing)
 
+## 🛠️ Pré-requisitos
+
+Antes de rodar o projeto, você precisa ter instalado na sua máquina:
+
+Node.js (versão 18 ou superior recomendada)
+npm (geralmente instalado junto com o Node.js) ou yarn
+Git (para clonar o repositório)
+
+Para verificar se o Node.js e o npm estão instalados, rode:
+
+```bash
+node -v
+npm -v
+```
+
 ## 🚀 Como rodar o projeto
 
 ### 1️⃣ Clonar o repositório
