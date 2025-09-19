@@ -4,6 +4,8 @@ Este projeto é uma aplicação backend em **TypeScript com Express**, usando **
 
 📄 Documentação do processo: [Google Docs](https://docs.google.com/document/d/1o5HKVQLIiWiGEUAclRSvuTU7_AyJkH99hI1FT6QKUXw/edit?usp=sharing)
 
+📄 Documentação das funções: [Google Docs](https://docs.google.com/document/d/1V-a1L9vIZDCN6SUQejfwojVC0m06PIaaz7sa9wsuY6o/edit?usp=sharing)
+
 ## 🚀 Como rodar o projeto
 
 ### 1️⃣ Clonar o repositório
@@ -50,6 +52,14 @@ Authorization: Bearer <TOKEN_AQUI>.
 ## 📊 Endpoints
 
 Todos os endpoints exigem envio do JWT no header.
+
+### 👉 Para explorar a documentação interativa da API, acesse o Swagger UI:
+
+```bash
+http://localhost:3000/api-docs
+```
+
+No Swagger você pode visualizar todos os endpoints, parâmetros (query, params e body), schemas de entrada e saída, além de testar requisições diretamente pela interface.
 
 ### 👤 Pessoas
 
